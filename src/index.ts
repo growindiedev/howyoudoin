@@ -1,1 +1,3 @@
-alert("tell me the truth")
+import "./style.scss"
+import "./index.html"
+

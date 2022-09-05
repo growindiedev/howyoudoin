@@ -5,15 +5,41 @@ module.exports = {
   mode: "development",
   entry: "./src/index.ts",
   devtool: "inline-source-map", // figures out root file of the error
-  devServer: {
-    static: "./dist", //rebuilds when anything changes
-  },
-  optimization: {
-    runtimeChunk: "single",
+
+  module: {
+    rules: [
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+      },
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      // {
+      //   test: /\.css$/i,
+      //   use: ["style-loader", "css-loader"],
+      // },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.scss$/i,
+        use: [
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Development",
+      template: "./src/index.html",
     }),
     // using this plugin to automatically generate index.html
   ],
@@ -25,33 +51,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true, //cleans the old files in dist dir on each build
   },
-
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
-      },
-      {
-        test: /\.scss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          "style-loader",
-          // Translates CSS into CommonJS
-          "css-loader",
-          // Compiles Sass to CSS
-          "sass-loader",
-        ],
-      },
-    ],
+  devServer: {
+    static: "./dist", //rebuilds when anything changes
+  },
+  optimization: {
+    runtimeChunk: "single",
   },
 };
