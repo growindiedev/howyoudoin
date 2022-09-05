@@ -37,12 +37,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
-    }),
-    // using this plugin to automatically generate index.html
-  ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
@@ -51,6 +45,12 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true, //cleans the old files in dist dir on each build
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+    }),
+    // using this plugin to automatically generate index.html
+  ],
   devServer: {
     static: "./dist", //rebuilds when anything changes
   },
