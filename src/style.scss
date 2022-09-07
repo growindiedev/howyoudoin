@@ -9,30 +9,32 @@
 body {
   display: grid;
   grid-template-columns: 2fr 6fr;
-  grid-template-rows: 2fr 10fr 1fr;
+  grid-template-rows: 1.5fr 10fr 1fr;
   height: 100vh;
   font-family: Roboto, ariel;
 
   * {
-    // border: 1px solid pink;
     display: block;
    }
 }
 
 
 .header {
-  font-size: 2rem;
+  font-size: 2.5rem;
+  font-weight: 900;
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #2dd4bf;
   color: white;
+  border-bottom: 2px solid #000;
+  
 }
 
 .sidebar {
   display: grid;
-  grid-template-rows: repeat(8, 1fr);
+  // grid-template-rows: repeat(8, 1fr);
   overflow-y: scroll;
   background-color: #ccfbf1;
 }
@@ -46,6 +48,8 @@ body {
   justify-content: center;
   background-color: #2dd4bf;
   color: white;
+  border-top: 2px solid #000;
+
 }
 
 .main-view {
@@ -60,25 +64,33 @@ body {
 }
 
 .header-container {
+  font-size: 1.5rem;
   margin-top: 0;
-  min-height: 15vh;
+  min-height: 12vh;
   border-radius: 5px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #2dd4bf;
-  color: #FFFF;
+  justify-content: left;
+  background-color: #ccfbf1;
+  border: 2px solid #2dd4bf;
+  padding-left: 2rem;
+  color: #2dd4bf;
 }
 
 .todo-container {
-  // border: 1px solid red;
   padding-bottom: 0;
   .todo-item {
     border: 2px solid #000;
     border-radius: 5px;
-    // max-height: 3rem;
     margin-bottom: 10px;
     padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .todo-item-text {
+      margin-right: auto;
+    }
    }
 }
 
