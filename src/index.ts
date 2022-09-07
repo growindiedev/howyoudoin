@@ -1,31 +1,40 @@
 import "./style.scss"
 
-let addBtn = document.querySelector(".add-task")
-let mainView = document.querySelector(".main-view")
-let todoContainer = document.querySelector(".todo-container")
-let inputForm  = document.querySelector(".input-form")!
-inputForm?.remove();
+const openFormBtn = document.querySelector(".open-form")
+const mainView = document.querySelector(".main-view")
+const todoContainer = document.querySelector(".todo-container")
+const inputForm  = document.querySelector(".input-form")
+const closeFormBtn = document.querySelector(".close-form")
+const pushTaskBtn = document.querySelector(".push-task")
+const inputElm : any = inputForm?.firstElementChild
 
+
+inputForm?.remove();
 const createForm = () => {
   const input = document.createElement("input")
-  
 }
 
-const addTask  = (e: Event) => {
-  // let task = document.createElement("div");
-  // task.classList.add("todo-item")
-  // task.textContent = "testing tasks"
-  addBtn?.remove();
-  mainView?.appendChild(inputForm);
+const openForm  = (e: Event) => {
+  openFormBtn?.remove();
+  inputForm && mainView?.appendChild(inputForm);
 }
 
-
-const removeTask = (e: Event) => {
-
+const closeForm = () => {
+  inputElm.value = "";
+  inputForm?.remove()
+  openFormBtn && mainView?.appendChild(openFormBtn);
 }
 
-//problem 1
-addBtn?.addEventListener("click", addTask)
+const addToDoItem = () => {
+  let task = document.createElement("div");
+  task.classList.add("todo-item")
+  task.textContent = inputElm.value
+  todoContainer?.appendChild(task);
+  closeForm()
+}
 
+openFormBtn?.addEventListener("click", openForm)
+closeFormBtn?.addEventListener("click", closeForm)
+pushTaskBtn?.addEventListener("click", addToDoItem)
 
 
