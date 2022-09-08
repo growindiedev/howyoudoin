@@ -27,18 +27,17 @@ const closeForm = () => {
   openFormBtn && mainView?.appendChild(openFormBtn);
 }
 
-const removeTodoItem = () => {
-
+const removeTodoItem = (e: any) => {
+  e.target.parentNode.remove()
 }
 
 const completeTodoItem = (e: any) => {
   e.target.classList.toggle("checked")
   e.target.nextSibling.classList.toggle("todo-item-checked");
-  //alert("whoop")
 }
 
-const favoriteTodoItem = () => {
-
+const favoriteTodoItem = (e: any) => {
+  e.target.classList.toggle("starred")
 }
 
 const createToDoElm = (): HTMLDivElement => {
@@ -59,11 +58,13 @@ const createToDoElm = (): HTMLDivElement => {
   let starIcon = document.createElement("span");
   starIcon.classList.add("material-icons-round", "star", "todo-btn");
   starIcon.textContent = "star_border";
+  starIcon.addEventListener("click", favoriteTodoItem)
   task.appendChild(starIcon)
 
   let cancelIcon = document.createElement("span");
   cancelIcon.classList.add("material-icons-round", "cancel", "todo-btn");
-  cancelIcon.textContent = "cancel";
+  cancelIcon.textContent = "highlight_off";
+  cancelIcon.addEventListener("click", removeTodoItem)
   task.appendChild(cancelIcon)
   return task
 }

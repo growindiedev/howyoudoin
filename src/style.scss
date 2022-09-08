@@ -88,22 +88,31 @@ body {
     align-items: center;
     gap: 1rem;
 
+    .todo-btn {
+      cursor: pointer;
+    }
+
     .todo-item-text {
       margin-right: auto;
+    }
+
+    .cancel {
+      color: red;
     }
 
     .todo-item-checked {
       text-decoration: line-through;
     }
 
-    .todo-btn {
-      cursor: pointer;
-    }
-
-
     .checked {
       color: #2dd4bf;
     }
+
+    .starred {
+      color: rgb(218, 185, 0);
+    }
+
+
 
    }
 }
