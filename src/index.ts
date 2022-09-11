@@ -55,6 +55,12 @@ const createToDoElm = (): HTMLDivElement => {
   text.textContent = inputElm.value;
   task.appendChild(text)
 
+  let calenderIcon = document.createElement("span");
+  calenderIcon.classList.add("material-icons-round", "calender", "todo-btn");
+  calenderIcon.textContent = "insert_invitation";
+  calenderIcon.addEventListener("click", removeTodoItem)
+  task.appendChild(calenderIcon)
+
   let starIcon = document.createElement("span");
   starIcon.classList.add("material-icons-round", "star", "todo-btn");
   starIcon.textContent = "star_border";
@@ -66,6 +72,7 @@ const createToDoElm = (): HTMLDivElement => {
   cancelIcon.textContent = "highlight_off";
   cancelIcon.addEventListener("click", removeTodoItem)
   task.appendChild(cancelIcon)
+
   return task
 }
 
