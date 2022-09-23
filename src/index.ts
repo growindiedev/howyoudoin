@@ -6,9 +6,9 @@ const todoContainer = document.querySelector(".todo-container")
 const inputForm  = document.querySelector(".input-form")
 const closeFormBtn = document.querySelector(".close-form")
 const pushTaskBtn = document.querySelector(".push-task")
-const todoItems = document.querySelectorAll("todo-items")
+const todoItems = document.querySelectorAll("todo-item")
 
-const inputElm : any = inputForm?.firstElementChild
+const inputElm : any = document.querySelector(".add-task-input")
 
 
 inputForm?.remove();
@@ -42,7 +42,7 @@ const favoriteTodoItem = (e: any) => {
 
 const createToDoElm = (): HTMLDivElement => {
   let task = document.createElement("div");
-  task.classList.add("todo-items");
+  task.classList.add("todo-item");
 
   let checkIcon = document.createElement("span");
   checkIcon.classList.add("material-icons-round", "check", "todo-btn");
@@ -58,7 +58,7 @@ const createToDoElm = (): HTMLDivElement => {
   let calenderIcon = document.createElement("span");
   calenderIcon.classList.add("material-icons-round", "calender", "todo-btn");
   calenderIcon.textContent = "insert_invitation";
-  calenderIcon.addEventListener("click", removeTodoItem)
+  //calenderIcon.addEventListener("click", removeTodoItem)
   task.appendChild(calenderIcon)
 
   let starIcon = document.createElement("span");
@@ -86,9 +86,4 @@ openFormBtn?.addEventListener("click", openForm)
 closeFormBtn?.addEventListener("click", closeForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)
 
-todoItems.forEach((item: any) => {
-  item.array.forEach((element: any) => {
-    console.log("jus checking", element);
-  });
-})
 
