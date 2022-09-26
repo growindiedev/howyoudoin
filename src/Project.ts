@@ -1,6 +1,6 @@
-export default class project {
+export default class Project {
   name: string;
-  tasks: never[];
+  tasks: any[];
   constructor(name: string){
     this.name = name;
     this.tasks = [];
