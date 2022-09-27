@@ -47,18 +47,34 @@ body {
     // border: 2px solid #000;
     // border-radius: 5px;
     // margin-bottom: 10px;
+    display: flex;
     font-size: 1.3rem;
     font-weight: 900;
     padding: 0.5rem;
-    display: flex;
     cursor: pointer;
     //border: 1px solid red;
-    //align-items: center;
+    align-items: center;
     gap: 1rem;
+
+    .cancel {
+      display: none;
+      font-size: 1.2rem;
+      color: rgba(255, 0, 0, 0.548);
+    }
   }
 
-  .home-item {
-    align-items: center;
+  .home-item:hover, .projects-item:hover {
+    background-color: rgba(0, 0, 0, 0.061);
+    border-radius: 10px;
+
+    .cancel {
+      display: block;
+    }
+  }
+
+  .project-item-text {
+    padding-bottom: 5px;
+    margin-right: auto;
   }
 
   .inbox {
@@ -85,8 +101,6 @@ body {
     font-size: 2rem;
   }
 
-  
-
   .home-heading, .projects-heading {
     font-size: 1.5rem;
     font-weight: bolder;
@@ -100,6 +114,15 @@ body {
 
 }
 
+
+.open-project-form {
+  //margin: 0 auto;
+  scale: 75%;
+}
+
+.open-form {
+  scale: 85%;
+}
 
 
 .footer {
@@ -201,9 +224,6 @@ body {
   grid-template-columns: 1fr 1fr;
   padding: 1rem;
   background-color: #ccfbf1;
-  // border: 3px solid #000;
-  // border-radius: 5px;
-
   button {
     // background-color: gold;
     max-height: 40px;
@@ -232,7 +252,7 @@ button{
   white-space: nowrap;
   //background-color: #2dd4bf;
   background-color: #f1f5f9;
-  //color: white;
+
 
 }
 
