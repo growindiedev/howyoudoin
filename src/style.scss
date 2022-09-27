@@ -49,15 +49,56 @@ body {
   // > *  {
   //   border: 1px solid red;
   // }
+  .home-container, .projects-container {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    //gap: 0.5rem;
+    .home-item, .projects-item {
+      // border: 2px solid #000;
+      // border-radius: 5px;
+      // margin-bottom: 10px;
+      font-size: 1.3rem;
+      font-weight: 900;
+      padding: 0.5rem;
+      display: flex;
+      cursor: pointer;
+      //border: 1px solid red;
+      align-items: center;
+      gap: 1rem;
+    }
 
-  .home-heading, .projects-heading {
-    font-size: 1.3rem;
-    font-weight: bolder;
-    text-align: left;
-    border-bottom: 4px solid black;
+    .inbox {
+      color: rgb(39, 167, 235);
+    }
+
+    .today {
+      color: indianred;
+    }
+
+    .upcoming {
+      color: gray;
+    }
+
+    .favourites {
+      color: goldenrod;
+    }
+
+    .inbox, .today, .upcoming, .favourites {
+      font-size: 2rem;
+    }
+
   }
 
-  .home-container, .projects-container {
+  
+
+  .home-heading, .projects-heading {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    text-align: left;
+    border-bottom: 2px solid black;
+  }
+
+  > * {
     margin-bottom: 0.5rem;
   }
 
