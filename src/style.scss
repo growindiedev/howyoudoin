@@ -38,31 +38,10 @@ body {
 
 .sidebar {
   display: grid;
-  grid-template-rows: 1fr 6fr 1fr 6fr;
+  grid-template-rows: 1fr auto 1fr 6fr;
   overflow-y: scroll;
   background-color: #ccfbf1;
   padding: 1rem;
-  //color: #09c0a7;
-
-  
-  // > *  {
-  //   border: 1px solid red;
-  // }
-  .home-container {
-    display: grid;
-    //grid-template-rows: repeat(4, 1fr);
-    grid-template-rows: repeat(auto-fit, minmax(3rem, 1fr));
-    overflow-y: scroll;
-    //gap: 0.5rem;
-  }
-
-  .projects-container {
-    display: grid;
-    //grid-template-rows: repeat(4, 1fr);
-    grid-template-rows: repeat(auto-fill, minmax(3rem, 1fr));
-    overflow-y: scroll;
-    //gap: 0.5rem;
-  }
 
   .home-item, .projects-item {
     // border: 2px solid #000;
@@ -152,10 +131,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: left;
-  background-color: #ccfbf1;
-  border: 2px solid #2dd4bf;
+  background-color: #e2e8f0;
   padding-left: 2rem;
-  color: #2dd4bf;
+  color: #282828;
 
 }
 
@@ -200,6 +178,7 @@ body {
 }
 
 .input-form {
+  justify-self: center;
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr 1fr;
@@ -207,13 +186,28 @@ body {
   max-height: 10rem;
   // margin: 1rem 0;
   background-color: #ccfbf1;
-  border: 3px solid #000;
+  //border: 3px solid #000;
   border-radius: 5px;
 
   button {
     max-height: 40px;
   }
 
+}
+
+.project-form {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+  padding: 1rem;
+  background-color: #ccfbf1;
+  // border: 3px solid #000;
+  // border-radius: 5px;
+
+  button {
+    // background-color: gold;
+    max-height: 40px;
+  }
 }
 
 button{
@@ -227,6 +221,7 @@ button{
   display: flex;
   flex-shrink: 0;
   font-size: 14px;
+  font-weight: 600;
   justify-content: center;
   line-height: 1;
   overflow: hidden;
@@ -235,6 +230,10 @@ button{
   text-overflow: ellipsis;
   transition: all .14s ease-out;
   white-space: nowrap;
+  //background-color: #2dd4bf;
+  background-color: #f1f5f9;
+  //color: white;
+
 }
 
 button:hover {
@@ -247,7 +246,7 @@ button:focus-visible{
 
 input {
   grid-column: 1/-1;
-  border: 3px solid #000;
+  border: 2px solid #000;
   border-radius: 5px;
   height: 40px;
   line-height: normal;
