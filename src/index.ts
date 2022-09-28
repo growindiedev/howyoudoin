@@ -1,5 +1,6 @@
 import "./style.scss"
 import Task from "./Task"
+import Project from "./Project"
 
 const mainView = document.querySelector(".main-view")
 
@@ -109,7 +110,7 @@ const addToDoItem = () => {
 }
 
 
-const createProjectElm = ():HTMLDivElement => {
+const createProjectElm = (projectObj: any):HTMLDivElement => {
   let project = document.createElement("div");
   project.classList.add("projects-item");
   
@@ -120,7 +121,7 @@ const createProjectElm = ():HTMLDivElement => {
 
   let projectItemText = document.createElement("span");
   projectItemText.classList.add("project-item-text");
-  projectItemText.textContent = inputProjectElm.value;
+  projectItemText.textContent = projectObj.name;
   project.appendChild(projectItemText);
 
 
@@ -135,8 +136,9 @@ const createProjectElm = ():HTMLDivElement => {
 
 
 const addProjectItem = () => {
-  let project = createProjectElm();
-  projectsContainer?.appendChild(project);
+  const project = new Project(inputProjectElm.value)
+  const projectNode = createProjectElm(project);
+  projectsContainer?.appendChild(projectNode);
   closeProjectForm();
 }
 
