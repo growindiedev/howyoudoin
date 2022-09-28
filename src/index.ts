@@ -1,5 +1,11 @@
 import "./style.scss"
 
+// <div class="projects-item">
+//           <span class="material-icons-round project-icon">build_circle</span>
+//           <span class="project-item-text">gucci</span>
+//           <span class="material-icons-round cancel">cancel</span>
+// </div>
+
 const mainView = document.querySelector(".main-view")
 
 const todoContainer = document.querySelector(".todo-container")
@@ -12,8 +18,8 @@ const projectsContainer = document.querySelector(".projects-container")
 const inputProjectForm  = document.querySelector(".project-form")
 const openProjectFormBtn = document.querySelector(".open-project-form")
 const closeProjectFormBtn = document.querySelector(".close-project-form")
-const pushProjectBtn = document.querySelector(".push-project")
 
+const pushProjectBtn = document.querySelector(".push-project")
 const inputElm : any = document.querySelector(".add-task-input")
 const inputProjectElm : any = document.querySelector(".add-project-input")
 
@@ -50,6 +56,10 @@ const closeProjectForm = () => {
 }
 
 const removeTodoItem = (e: any) => {
+  e.target.parentNode.remove()
+}
+
+const removeProjectItem = (e: any) => {
   e.target.parentNode.remove()
 }
 
@@ -91,7 +101,7 @@ const createToDoElm = (): HTMLDivElement => {
 
   let cancelIcon = document.createElement("span");
   cancelIcon.classList.add("material-icons-round", "cancel", "todo-btn");
-  cancelIcon.textContent = "highlight_off";
+  cancelIcon.textContent = "cancel";
   cancelIcon.addEventListener("click", removeTodoItem)
   task.appendChild(cancelIcon)
 
@@ -104,10 +114,48 @@ const addToDoItem = () => {
   closeForm();
 }
 
+
+// <div class="projects-item">
+//           <span class="material-icons-round project-icon">build_circle</span>
+//           <span class="project-item-text">gucci</span>
+//           <span class="material-icons-round cancel">cancel</span>
+// </div>
+
+const createProjectElm = ():HTMLDivElement => {
+  let project = document.createElement("div");
+  project.classList.add("projects-item");
+  
+  let projectIcon = document.createElement("span");
+  projectIcon.classList.add("material-icons-round", "project-icon");
+  projectIcon.textContent = "build_circle";
+  project.appendChild(projectIcon)
+
+  let projectItemText = document.createElement("span");
+  projectItemText.classList.add("project-item-text");
+  projectItemText.textContent = inputProjectElm.value;
+  project.appendChild(projectItemText);
+
+
+  let cancelIcon = document.createElement("span");
+  cancelIcon.classList.add("material-icons-round", "cancel", );
+  cancelIcon.textContent = "cancel";
+  cancelIcon.addEventListener("click", removeProjectItem);
+  project.appendChild(cancelIcon)
+
+  return project;
+}
+
+
+const addProjectItem = () => {
+  let project = createProjectElm();
+  projectsContainer?.appendChild(project);
+  closeProjectForm();
+}
+
 openFormBtn?.addEventListener("click", openForm)
 closeTaskFormBtn?.addEventListener("click", closeForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)
 
 openProjectFormBtn?.addEventListener("click", openProjectForm);
-closeProjectFormBtn?.addEventListener("click", closeProjectForm);
-
+pushProjectBtn?.addEventListener("click", addProjectItem)               
+closeProjectFormBtn?.addEventListener("click", closeProjectForm);  
