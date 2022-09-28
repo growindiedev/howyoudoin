@@ -1,30 +1,52 @@
 import "./style.scss"
 
-const openFormBtn = document.querySelector(".open-form")
 const mainView = document.querySelector(".main-view")
+
 const todoContainer = document.querySelector(".todo-container")
-const inputForm  = document.querySelector(".input-form")
-const closeFormBtn = document.querySelector(".close-form")
+const inputTaskForm  = document.querySelector(".input-form")
+const openFormBtn = document.querySelector(".open-form")
+const closeTaskFormBtn = document.querySelector(".close-form")
 const pushTaskBtn = document.querySelector(".push-task")
-const todoItems = document.querySelectorAll("todo-item")
+
+const projectsContainer = document.querySelector(".projects-container")
+const inputProjectForm  = document.querySelector(".project-form")
+const openProjectFormBtn = document.querySelector(".open-project-form")
+const closeProjectFormBtn = document.querySelector(".close-project-form")
+const pushProjectBtn = document.querySelector(".push-project")
 
 const inputElm : any = document.querySelector(".add-task-input")
+const inputProjectElm : any = document.querySelector(".add-project-input")
 
 
-inputForm?.remove();
+
+inputTaskForm?.remove();
+inputProjectForm?.remove();
+
+
 const createForm = () => {
   const input = document.createElement("input")
 }
 
 const openForm  = (e: Event) => {
   openFormBtn?.remove();
-  inputForm && mainView?.appendChild(inputForm);
+  inputTaskForm && mainView?.appendChild(inputTaskForm);
+}
+
+const openProjectForm  = (e: Event) => {
+  openProjectFormBtn?.remove();
+  inputProjectForm && projectsContainer?.appendChild(inputProjectForm);
 }
 
 const closeForm = () => {
   inputElm.value = "";
-  inputForm?.remove()
+  inputTaskForm?.remove()
   openFormBtn && mainView?.appendChild(openFormBtn);
+}
+
+const closeProjectForm = () => {
+  inputProjectElm.value = "";
+  inputProjectForm?.remove()
+  openProjectFormBtn && projectsContainer?.appendChild(openProjectFormBtn);
 }
 
 const removeTodoItem = (e: any) => {
@@ -83,7 +105,9 @@ const addToDoItem = () => {
 }
 
 openFormBtn?.addEventListener("click", openForm)
-closeFormBtn?.addEventListener("click", closeForm)
+closeTaskFormBtn?.addEventListener("click", closeForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)
 
+openProjectFormBtn?.addEventListener("click", openProjectForm);
+closeProjectFormBtn?.addEventListener("click", closeProjectForm);
 
