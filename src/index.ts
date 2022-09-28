@@ -1,10 +1,5 @@
 import "./style.scss"
-
-// <div class="projects-item">
-//           <span class="material-icons-round project-icon">build_circle</span>
-//           <span class="project-item-text">gucci</span>
-//           <span class="material-icons-round cancel">cancel</span>
-// </div>
+import Task from "./Task"
 
 const mainView = document.querySelector(".main-view")
 
@@ -23,8 +18,6 @@ const pushProjectBtn = document.querySelector(".push-project")
 const inputElm : any = document.querySelector(".add-task-input")
 const inputProjectElm : any = document.querySelector(".add-project-input")
 
-
-
 inputTaskForm?.remove();
 inputProjectForm?.remove();
 
@@ -37,7 +30,7 @@ const openForm  = (e: Event) => {
   openFormBtn?.remove();
   inputTaskForm && mainView?.appendChild(inputTaskForm);
 }
-
+  
 const openProjectForm  = (e: Event) => {
   openProjectFormBtn?.remove();
   inputProjectForm && projectsContainer?.appendChild(inputProjectForm);
@@ -72,7 +65,7 @@ const favoriteTodoItem = (e: any) => {
   e.target.classList.toggle("starred")
 }
 
-const createToDoElm = (): HTMLDivElement => {
+const createToDoElm = (taskObj: any): HTMLDivElement => {
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
@@ -84,7 +77,7 @@ const createToDoElm = (): HTMLDivElement => {
 
   let text = document.createElement("span");
   text.classList.add("todo-item-text");
-  text.textContent = inputElm.value;
+  text.textContent = taskObj.name;
   task.appendChild(text)
 
   let calenderIcon = document.createElement("span");
@@ -109,17 +102,12 @@ const createToDoElm = (): HTMLDivElement => {
 }
 
 const addToDoItem = () => {
-  let todo = createToDoElm();
-  todoContainer?.appendChild(todo);
+  const todo = new Task(inputElm.value)
+  const todoNode = createToDoElm(todo);
+  todoContainer?.appendChild(todoNode);
   closeForm();
 }
 
-
-// <div class="projects-item">
-//           <span class="material-icons-round project-icon">build_circle</span>
-//           <span class="project-item-text">gucci</span>
-//           <span class="material-icons-round cancel">cancel</span>
-// </div>
 
 const createProjectElm = ():HTMLDivElement => {
   let project = document.createElement("div");
