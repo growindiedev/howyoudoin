@@ -7,6 +7,6 @@ export default class HowYouDoin {
       this.projects.push(new Project('All Tasks'))
       this.projects.push(new Project('Today'))
       this.projects.push(new Project('Upcoming'))
-      this.projects.push(new Project('Favourites'))
+      this.projects.push(new Project('Important'))
     }
-} 
+}
