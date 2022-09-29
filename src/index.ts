@@ -21,10 +21,8 @@ const inputTaskElm : any = document.querySelector(".add-task-input")
 const inputDescriptionElm : any = document.querySelector(".add-desc-input")
 const inputDateElm : any = document.querySelector(".add-date-input")
 
-
 inputTaskForm?.remove();
 inputProjectForm?.remove();
-
 
 const createForm = () => {
   const input = document.createElement("input")
@@ -42,6 +40,9 @@ const openProjectForm  = (e: Event) => {
 
 const closeForm = () => {
   inputTaskElm.value = "";
+  inputDescriptionElm.value = "";
+  inputDateElm.value = "";
+
   inputTaskForm?.remove()
   openFormBtn && mainView?.appendChild(openFormBtn);
 }
@@ -94,13 +95,6 @@ const createToDoElm = (taskObj: any): HTMLDivElement => {
 
   task.appendChild(textContainer);
 
-
-  // let calenderIcon = document.createElement("span");
-  // calenderIcon.classList.add("material-icons-round", "calender", "todo-btn");
-  // calenderIcon.textContent = "insert_invitation";
-  // task.appendChild(calenderIcon)
-
-
   let calendarText = document.createElement("span");
   calendarText.classList.add("calendar", "todo-btn");
   calendarText.textContent = taskObj.dueDate;
@@ -144,7 +138,6 @@ const createProjectElm = (projectObj: any):HTMLDivElement => {
   projectItemText.classList.add("project-item-text");
   projectItemText.textContent = projectObj.name;
   project.appendChild(projectItemText);
-
 
   let cancelIcon = document.createElement("span");
   cancelIcon.classList.add("material-icons-round", "cancel", );
