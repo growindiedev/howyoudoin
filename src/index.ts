@@ -14,10 +14,13 @@ const projectsContainer = document.querySelector(".projects-container")
 const inputProjectForm  = document.querySelector(".project-form")
 const openProjectFormBtn = document.querySelector(".open-project-form")
 const closeProjectFormBtn = document.querySelector(".close-project-form")
-
 const pushProjectBtn = document.querySelector(".push-project")
-const inputElm : any = document.querySelector(".add-task-input")
 const inputProjectElm : any = document.querySelector(".add-project-input")
+
+const inputTaskElm : any = document.querySelector(".add-task-input")
+const inputDescriptionElm : any = document.querySelector(".add-desc-input")
+const inputDateElm : any = document.querySelector(".add-date-input")
+
 
 inputTaskForm?.remove();
 inputProjectForm?.remove();
@@ -38,7 +41,7 @@ const openProjectForm  = (e: Event) => {
 }
 
 const closeForm = () => {
-  inputElm.value = "";
+  inputTaskElm.value = "";
   inputTaskForm?.remove()
   openFormBtn && mainView?.appendChild(openFormBtn);
 }
@@ -76,15 +79,25 @@ const createToDoElm = (taskObj: any): HTMLDivElement => {
   checkIcon.addEventListener("click", completeTodoItem)
   task.appendChild(checkIcon)
 
-  let text = document.createElement("span");
+  let textContainer = document.createElement("span");
+  textContainer.classList.add("todo-item-text-container"); 
+
+  let text = document.createElement("div");
   text.classList.add("todo-item-text");
   text.textContent = taskObj.name;
-  task.appendChild(text)
+  textContainer.appendChild(text)
+
+  let description = document.createElement("div");
+  description.classList.add("todo-item-desc");
+  description.textContent = taskObj.description
+  textContainer.appendChild(description)
+
+  task.appendChild(textContainer);
+
 
   let calenderIcon = document.createElement("span");
   calenderIcon.classList.add("material-icons-round", "calender", "todo-btn");
   calenderIcon.textContent = "insert_invitation";
-  //calenderIcon.addEventListener("click", removeTodoItem)
   task.appendChild(calenderIcon)
 
   let starIcon = document.createElement("span");
@@ -103,7 +116,8 @@ const createToDoElm = (taskObj: any): HTMLDivElement => {
 }
 
 const addToDoItem = () => {
-  const todo = new Task(inputElm.value)
+  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, true);
+  console.dir(todo);
   const todoNode = createToDoElm(todo);
   todoContainer?.appendChild(todoNode);
   closeForm();

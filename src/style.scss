@@ -177,8 +177,12 @@ body {
       cursor: pointer;
     }
 
-    .todo-item-text {
+    .todo-item-text-container {
       margin-right: auto;
+
+      .todo-item-desc {
+        font-size: 0.8rem;
+      }
     }
 
     .cancel {
@@ -265,10 +269,7 @@ button{
   text-overflow: ellipsis;
   transition: all .14s ease-out;
   white-space: nowrap;
-  //background-color: #2dd4bf;
   background-color: #f1f5f9;
-
-
 }
 
 button:hover {
