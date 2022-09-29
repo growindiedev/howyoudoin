@@ -3,7 +3,7 @@ export default class Task {
   description: string;
   dueDate: string;
   important: boolean;
-  constructor(name: string, description = "", dueDate = "no due date", important = false){
+  constructor(name: string, description?: any, dueDate = "no due date", important = false){
     this.name = name;
     this.description = description;
     this.dueDate = dueDate;
