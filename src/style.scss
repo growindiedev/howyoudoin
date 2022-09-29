@@ -185,6 +185,13 @@ body {
       }
     }
 
+    .calendar {
+      font-size: 0.75rem;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 3px;
+    }
+
     .cancel {
       color: red;
     }
@@ -199,6 +206,7 @@ body {
 
     .starred {
       color: rgb(218, 185, 0);
+      content: "star";
     }
     
    }

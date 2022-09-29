@@ -95,10 +95,16 @@ const createToDoElm = (taskObj: any): HTMLDivElement => {
   task.appendChild(textContainer);
 
 
-  let calenderIcon = document.createElement("span");
-  calenderIcon.classList.add("material-icons-round", "calender", "todo-btn");
-  calenderIcon.textContent = "insert_invitation";
-  task.appendChild(calenderIcon)
+  // let calenderIcon = document.createElement("span");
+  // calenderIcon.classList.add("material-icons-round", "calender", "todo-btn");
+  // calenderIcon.textContent = "insert_invitation";
+  // task.appendChild(calenderIcon)
+
+
+  let calendarText = document.createElement("span");
+  calendarText.classList.add("calendar", "todo-btn");
+  calendarText.textContent = taskObj.dueDate;
+  task.appendChild(calendarText)
 
   let starIcon = document.createElement("span");
   starIcon.classList.add("material-icons-round", "star", "todo-btn");
@@ -116,7 +122,8 @@ const createToDoElm = (taskObj: any): HTMLDivElement => {
 }
 
 const addToDoItem = () => {
-  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, true);
+  //can grab values from localstorage or firebase here
+  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false);
   console.dir(todo);
   const todoNode = createToDoElm(todo);
   todoContainer?.appendChild(todoNode);
