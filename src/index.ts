@@ -1,8 +1,10 @@
 import "./style.scss"
 import Task from "./Task"
 import Project from "./Project"
+import HowYouDoin from "./HowYouDoin"
 
 const mainView = document.querySelector(".main-view")
+
 
 const todoContainer = document.querySelector(".todo-container")
 const inputTaskForm  = document.querySelector(".input-form")
@@ -20,6 +22,8 @@ const inputProjectElm : any = document.querySelector(".add-project-input")
 const inputTaskElm : any = document.querySelector(".add-task-input")
 const inputDescriptionElm : any = document.querySelector(".add-desc-input")
 const inputDateElm : any = document.querySelector(".add-date-input")
+const howYouDoin = new HowYouDoin();
+
 
 inputTaskForm?.remove();
 inputProjectForm?.remove();
@@ -70,7 +74,7 @@ const favoriteTodoItem = (e: any) => {
   e.target.classList.toggle("starred")
 }
 
-const createToDoElm = (taskObj: any): HTMLDivElement => {
+const createToDoElm = (taskObj: any) => {
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
@@ -112,20 +116,19 @@ const createToDoElm = (taskObj: any): HTMLDivElement => {
   cancelIcon.addEventListener("click", removeTodoItem)
   task.appendChild(cancelIcon)
 
-  return task
+  todoContainer?.appendChild(task)
 }
 
 const addToDoItem = () => {
-  //can grab values from localstorage or firebase here
+ //TODO: can grab values from localstorage or firebase here
+ //TODO: first we check what is the current project, then we create a task and push that task into that project.
   const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false);
-  console.dir(todo);
-  const todoNode = createToDoElm(todo);
-  todoContainer?.appendChild(todoNode);
+  createToDoElm(todo);
   closeForm();
 }
 
 
-const createProjectElm = (projectObj: any):HTMLDivElement => {
+const createProjectElm = (projectObj: any) => {
   let project = document.createElement("div");
   project.classList.add("projects-item");
   
@@ -144,15 +147,18 @@ const createProjectElm = (projectObj: any):HTMLDivElement => {
   cancelIcon.textContent = "cancel";
   cancelIcon.addEventListener("click", removeProjectItem);
   project.appendChild(cancelIcon)
-
-  return project;
+  projectsContainer?.appendChild(project);
 }
 
 
 const addProjectItem = () => {
-  const project = new Project(inputProjectElm.value)
-  const projectNode = createProjectElm(project);
-  projectsContainer?.appendChild(projectNode);
+  //TODO: here is where we need to add tasks with the projects
+  //localStorage.setItem("howYouDoin", JSON.stringify(howYouDoin)); //TODO: a brand new howyoudoin instance is being created on every new user account and thier projects 
+  // are being saved in localStorage or firestore.
+  const project = new Project(inputProjectElm.value);
+  howYouDoin.projects.push(project);
+
+  createProjectElm(project);
   closeProjectForm();
 }
 
