@@ -5,7 +5,6 @@ import HowYouDoin from "./HowYouDoin"
 
 const mainView = document.querySelector(".main-view")
 
-
 const todoContainer = document.querySelector(".todo-container")
 const inputTaskForm  = document.querySelector(".input-form")
 const openFormBtn = document.querySelector(".open-form")
@@ -13,6 +12,7 @@ const closeTaskFormBtn = document.querySelector(".close-form")
 const pushTaskBtn = document.querySelector(".push-task")
 
 const projectsContainer = document.querySelector(".projects-container")
+const homeProjectsContainer = document.querySelector(".home-container")
 const inputProjectForm  = document.querySelector(".project-form")
 const openProjectFormBtn = document.querySelector(".open-project-form")
 const closeProjectFormBtn = document.querySelector(".close-project-form")
@@ -150,10 +150,34 @@ const createProjectElm = (projectObj: any) => {
   projectsContainer?.appendChild(project);
 }
 
+const createHomeProjectElm = (ProjectObj: any) => {
+
+  // <div class="home-item">
+  //         <span class="material-icons-round today">today</span>
+  //         <span class="home-item-text">Today</span>
+  //       </div>
+  let project = document.createElement("div");
+  project.classList.add("home-item");
+
+  let projectIcon = document.createElement("span");
+  projectIcon.classList.add("material-icons-round", ProjectObj.name);
+  projectIcon.textContent = ProjectObj.name;
+  project.appendChild(projectIcon)
+
+  let projectItemText = document.createElement("span");
+  projectItemText.classList.add("home-item-text");
+  projectItemText.textContent = ProjectObj.name;
+  project.appendChild(projectItemText);
+
+  homeProjectsContainer?.appendChild(project)
+
+}
+
 
 const addProjectItem = () => {
   //TODO: here is where we need to add tasks with the projects
-  //localStorage.setItem("howYouDoin", JSON.stringify(howYouDoin)); //TODO: a brand new howyoudoin instance is being created on every new user account and thier projects 
+  //localStorage.setItem("howYouDoin", JSON.stringify(howYouDoin)); 
+  //TODO: a brand new howyoudoin instance is being created on every new user account and thier projects 
   // are being saved in localStorage or firestore.
   const project = new Project(inputProjectElm.value);
   howYouDoin.projects.push(project);
@@ -162,6 +186,19 @@ const addProjectItem = () => {
   closeProjectForm();
 }
 
+const loadProjects = () => {
+  //TODO: abilty to differ Home projects from User projects.
+  howYouDoin.projects.forEach( project => {
+    createHomeProjectElm(project)
+  })
+}
+
+const loadTasks = () => {
+  
+}
+
+
+loadProjects();
 openFormBtn?.addEventListener("click", openForm)
 closeTaskFormBtn?.addEventListener("click", closeForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)
