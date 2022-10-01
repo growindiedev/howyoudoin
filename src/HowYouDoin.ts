@@ -8,6 +8,7 @@ export default class HowYouDoin {
       this.projects.push(new Project('today'))
       this.projects.push(new Project('upcoming'))
       this.projects.push(new Project('star'))
+      this.projects.push(new Project('Blockchain'))
     }
 
     
