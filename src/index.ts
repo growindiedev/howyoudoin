@@ -25,7 +25,10 @@ const inputDateElm : any = document.querySelector(".add-date-input")
 
 //TODO: state management should happen inside howYouDoin class!
 const howYouDoin = new HowYouDoin();
-let currentProject: { tasks: any[] } = howYouDoin.projects[0]
+let currentProject: {
+  name: string;
+   tasks: any[] 
+} = howYouDoin.projects[0]
 
 inputTaskForm?.remove();
 inputProjectForm?.remove();
@@ -77,6 +80,7 @@ const favoriteTodoItem = (e: any) => {
 }
 
 const createToDoElm = (taskObj: any) => {
+  //TODO: conditionally render the todos w.r.t current project
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
@@ -132,19 +136,41 @@ const addToDoItem = () => {
   console.dir( howYouDoin)
   createToDoElm(todo);
   closeTaskForm();
+
+  
 }
 
-const toggleView = (projectObj: any) => {
-  // currentProject = projectObj.name
-  alert(projectObj.name)
+const selectTile = (node: any) =>{
+  const selectedTile = document.querySelector(".selected-project");   
+  selectedTile?.classList.remove("selected-project");                  //remove class selected from old tile
+
+  node.classList.add("selected-project");                             //add class selected to current tile
+}
+
+const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) => {
   currentProject = projectObj
+  selectTile(projectNode)
+  //alert(projectObj.name)
+  // currentProject = projectObj
+  // currentProject?.name === projectObj.name && projectNode?.classList.add("current-project")
+
+  // let projectNodes = document.querySelectorAll(".home-item, projects-item")
+  // projectNodes.forEach(elm => {
+  //   let target = elm.querySelector(".home-item-text, project-item-text")
+  //   target?.textContent !== currentProject.name && target?.classList.remove("current-project")
+  // })
+
+  // howYouDoin.projects.forEach(element => {
+  //   projectNodes.fro
+  // });
 }
 
 
 const createProjectElm = (projectObj: any) => {
   let project = document.createElement("div");
   project.classList.add("projects-item");
-  project.addEventListener("click",() => toggleView(projectObj))
+
+  project.addEventListener("click",() => toggleView(projectObj, project))
   
   let projectIcon = document.createElement("span");
   projectIcon.classList.add("material-icons-round", "project-icon");
@@ -167,7 +193,7 @@ const createProjectElm = (projectObj: any) => {
 const createHomeProjectElm = (projectObj: any) => {
   let project = document.createElement("div");
   project.classList.add("home-item");
-  project.addEventListener("click",() => toggleView(projectObj))
+  project.addEventListener("click",() => toggleView(projectObj, project))
 
 
   let projectIcon = document.createElement("span");
