@@ -81,6 +81,7 @@ const favoriteTodoItem = (e: any) => {
 
 const createToDoElm = (taskObj: any) => {
   //TODO: conditionally render the todos w.r.t current project
+  // TODO: need to take tasks from current projects
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
@@ -121,48 +122,43 @@ const createToDoElm = (taskObj: any) => {
   cancelIcon.textContent = "cancel";
   cancelIcon.addEventListener("click", removeTodoItem)
   task.appendChild(cancelIcon)
-
-  todoContainer?.appendChild(task)
+  //TODO: something needs to be done
+  //todoContainer?.appendChild(task)
+  return task;
 }
 
 const addToDoItem = () => {
  //TODO: can grab values from localstorage or firebase here
  //TODO: first we check what is the current project, then we create a task and push that task into that project.
-  //const project = howYouDoin.projects.find(project => project.name === currentProject)
   const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false);
   //project?.tasks.push(todo)
   currentProject?.tasks.push(todo)
   console.dir(currentProject)
   console.dir( howYouDoin)
-  createToDoElm(todo);
-  closeTaskForm();
 
-  
+  //const todoNode = createToDoElm(todo);
+
+  closeTaskForm();
 }
 
-const selectTile = (node: any) =>{
+const selectProject = (node: any) => {
   const selectedTile = document.querySelector(".selected-project");   
-  selectedTile?.classList.remove("selected-project");                  //remove class selected from old tile
-
-  node.classList.add("selected-project");                             //add class selected to current tile
+  selectedTile?.classList.remove("selected-project");                  
+  node.classList.add("selected-project");                             
 }
 
 const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) => {
   currentProject = projectObj
-  selectTile(projectNode)
-  //alert(projectObj.name)
-  // currentProject = projectObj
-  // currentProject?.name === projectObj.name && projectNode?.classList.add("current-project")
-
-  // let projectNodes = document.querySelectorAll(".home-item, projects-item")
-  // projectNodes.forEach(elm => {
-  //   let target = elm.querySelector(".home-item-text, project-item-text")
-  //   target?.textContent !== currentProject.name && target?.classList.remove("current-project")
-  // })
-
-  // howYouDoin.projects.forEach(element => {
-  //   projectNodes.fro
-  // });
+  selectProject(projectNode)
+  //TODO: make the seperate function of below lines and call inside add task btn
+  //////////
+  todoContainer!.innerHTML = "";
+  currentProject.tasks.forEach( task => {
+    let node = createToDoElm(task)
+    todoContainer?.appendChild(node);
+  })
+  ////////
+  console.log(currentProject)
 }
 
 
