@@ -135,9 +135,7 @@ const addToDoItem = () => {
   currentProject?.tasks.push(todo)
   console.dir(currentProject)
   console.dir( howYouDoin)
-
-  //const todoNode = createToDoElm(todo);
-
+  renderTasks();
   closeTaskForm();
 }
 
@@ -147,17 +145,21 @@ const selectProject = (node: any) => {
   node.classList.add("selected-project");                             
 }
 
-const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) => {
-  currentProject = projectObj
-  selectProject(projectNode)
-  //TODO: make the seperate function of below lines and call inside add task btn
-  //////////
+const renderTasks = () => {
+  document.querySelector(".project-heading")!.textContent = currentProject.name;
   todoContainer!.innerHTML = "";
   currentProject.tasks.forEach( task => {
     let node = createToDoElm(task)
     todoContainer?.appendChild(node);
   })
-  ////////
+}
+
+
+const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) => {
+
+  currentProject = projectObj
+  selectProject(projectNode)
+  renderTasks();
   console.log(currentProject)
 }
 
