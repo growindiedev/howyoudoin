@@ -4,8 +4,8 @@ export default class Project {
   tasks: any[];
   id: string;
   constructor(name: string){
-    this.id = id()
     this.name = name;
     this.tasks = [];
+    this.id = id()
   }
 }

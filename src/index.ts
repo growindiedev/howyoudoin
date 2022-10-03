@@ -25,10 +25,7 @@ const inputDateElm : any = document.querySelector(".add-date-input")
 
 //TODO: state management should happen inside howYouDoin class!
 const howYouDoin = new HowYouDoin();
-let currentProject: {
-  name: string;
-  tasks: any[] 
-} = howYouDoin.projects[0]
+let currentProject: any = howYouDoin.projects[0]
 
 inputTaskForm?.remove();
 inputProjectForm?.remove();
@@ -63,13 +60,28 @@ const closeProjectForm = () => {
 }
 
 const removeTodoItem = (taskObj: any) => {
-  currentProject.tasks = currentProject.tasks.filter(task => taskObj.id !== task.id)
+  currentProject.tasks = currentProject.tasks.filter((task: { id: any }) => taskObj.id !== task.id)
   renderTasks();
   //e.target.parentNode.remove()
 }
 
-const removeProjectItem = (e: any) => {
-  e.target.parentNode.remove()
+const renderProjects = () => {
+  projectsContainer!.innerHTML = "";
+  const userProjects = howYouDoin.projects.slice(4);
+  userProjects.forEach( (project: any) => {
+    let node = createProjectElm(project)
+    projectsContainer?.appendChild(node);
+  })
+  projectsContainer?.appendChild(openProjectFormBtn!)
+}
+
+const removeProjectItem = (e: any, projectObj: any) => {
+  howYouDoin.projects = howYouDoin.projects.filter(project => projectObj.id !== project.id)
+  renderProjects();
+  const inbox = document.querySelector(".material-icons-round.inbox")
+  projectObj.id === currentProject.id && toggleView(howYouDoin.projects[0], inbox)  
+  //loadProjects()
+  //e.target.parentNode.remove()
 }
 
 const completeTodoItem = (e: any, taskObj: any) => {
@@ -158,14 +170,17 @@ const selectProject = (node: any) => {
 const renderTasks = () => {
   document.querySelector(".project-heading")!.textContent = currentProject.name;
   todoContainer!.innerHTML = "";
-  currentProject.tasks.forEach( task => {
+  currentProject.tasks.forEach( (task: any) => {
     let node = createToDoElm(task)
     todoContainer?.appendChild(node);
   })
-    console.log("render", currentProject)
+  console.log("renderTasks", howYouDoin)
+ 
 }
 
-const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) => {
+
+
+const toggleView = (projectObj: any, projectNode: Element | undefined | null) => {
   currentProject = projectObj
   selectProject(projectNode)
   renderTasks();
@@ -176,25 +191,31 @@ const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) =>
 const createProjectElm = (projectObj: any) => {
   let project = document.createElement("div");
   project.classList.add("projects-item");
-
   project.addEventListener("click",() => toggleView(projectObj, project))
+
   
   let projectIcon = document.createElement("span");
   projectIcon.classList.add("material-icons-round", "project-icon");
   projectIcon.textContent = "build_circle";
+
   project.appendChild(projectIcon)
 
   let projectItemText = document.createElement("span");
   projectItemText.classList.add("project-item-text");
   projectItemText.textContent = projectObj.name;
+
   project.appendChild(projectItemText);
 
   let cancelIcon = document.createElement("span");
   cancelIcon.classList.add("material-icons-round", "cancel", );
   cancelIcon.textContent = "cancel";
-  cancelIcon.addEventListener("click", removeProjectItem);
+  cancelIcon.addEventListener("click", (e) => {
+    e.stopPropagation()
+    removeProjectItem(e, projectObj)
+  });
   project.appendChild(cancelIcon)
   projectsContainer?.appendChild(project);
+  return project
 }
 
 const createHomeProjectElm = (projectObj: any) => {
@@ -228,6 +249,8 @@ const addProjectItem = () => {
 
 const loadProjects = () => {
   //TODO: abilty to differ Home projects from User projects.
+  projectsContainer!.innerHTML = "";
+  homeProjectsContainer!.innerHTML = "";
   const homeProjects = howYouDoin.projects.slice(0, 4);
   const userProjects = howYouDoin.projects.slice(4);
   homeProjects.forEach( project => {
@@ -237,6 +260,7 @@ const loadProjects = () => {
   userProjects.forEach(project => {
     createProjectElm(project)
   })
+  projectsContainer?.appendChild(openProjectFormBtn!)
 }
 
 loadProjects();
