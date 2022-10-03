@@ -76,16 +76,14 @@ const completeTodoItem = (e: any, taskObj: any) => {
   e.target.nextSibling.classList.toggle("todo-item-checked");
 }
 
-const favoriteTodoItem = (e: any) => {
-  e.target.classList.toggle("starred")
+const favoriteTodoItem = (e: any, taskObj: any) => {
+  taskObj.important = !taskObj.important
+  taskObj.important ? e.target.classList.add("starred") : e.target.classList.remove("starred")
 }
 
 const createToDoElm = (taskObj: any) => {
   //TODO: conditionally render the todos w.r.t current project
   // TODO: need to take tasks from current projects
-
-  console.log("render", taskObj)
-
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
@@ -118,7 +116,7 @@ const createToDoElm = (taskObj: any) => {
   let starIcon = document.createElement("span");
   starIcon.classList.add("material-icons-round", "star", "todo-btn");
   starIcon.textContent = "star_border";
-  starIcon.addEventListener("click", favoriteTodoItem)
+  starIcon.addEventListener("click", (e) => favoriteTodoItem(e, taskObj))
   task.appendChild(starIcon)
 
   let cancelIcon = document.createElement("span");
@@ -130,6 +128,10 @@ const createToDoElm = (taskObj: any) => {
   if(taskObj.done){
     checkIcon.classList.add("checked") 
     textContainer.classList.add("todo-item-checked");
+  }
+
+  if(taskObj.important){
+    starIcon.classList.add("starred")
   }
   return task;
 }
@@ -234,11 +236,6 @@ const loadProjects = () => {
     createProjectElm(project)
   })
 }
-
-const loadTasks = () => {
-  
-}
-
 
 loadProjects();
 openTaskFormBtn?.addEventListener("click", openTaskForm)
