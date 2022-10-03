@@ -27,7 +27,7 @@ const inputDateElm : any = document.querySelector(".add-date-input")
 const howYouDoin = new HowYouDoin();
 let currentProject: {
   name: string;
-   tasks: any[] 
+  tasks: any[] 
 } = howYouDoin.projects[0]
 
 inputTaskForm?.remove();
@@ -70,8 +70,9 @@ const removeProjectItem = (e: any) => {
   e.target.parentNode.remove()
 }
 
-const completeTodoItem = (e: any) => {
-  e.target.classList.toggle("checked")
+const completeTodoItem = (e: any, taskObj: any) => {
+  taskObj.done = !taskObj.done
+  taskObj.done ? e.target.classList.add("checked") : e.target.classList.remove("checked")
   e.target.nextSibling.classList.toggle("todo-item-checked");
 }
 
@@ -82,13 +83,16 @@ const favoriteTodoItem = (e: any) => {
 const createToDoElm = (taskObj: any) => {
   //TODO: conditionally render the todos w.r.t current project
   // TODO: need to take tasks from current projects
+
+  console.log("render", taskObj)
+
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
   let checkIcon = document.createElement("span");
   checkIcon.classList.add("material-icons-round", "check", "todo-btn");
   checkIcon.textContent = "check_circle";
-  checkIcon.addEventListener("click", completeTodoItem)
+  checkIcon.addEventListener("click",(e) => completeTodoItem(e, taskObj))
   task.appendChild(checkIcon)
 
   let textContainer = document.createElement("span");
@@ -122,16 +126,18 @@ const createToDoElm = (taskObj: any) => {
   cancelIcon.textContent = "cancel";
   cancelIcon.addEventListener("click", removeTodoItem)
   task.appendChild(cancelIcon)
-  //TODO: something needs to be done
-  //todoContainer?.appendChild(task)
+
+  if(taskObj.done){
+    checkIcon.classList.add("checked") 
+    textContainer.classList.add("todo-item-checked");
+  }
   return task;
 }
 
 const addToDoItem = () => {
  //TODO: can grab values from localstorage or firebase here
  //TODO: first we check what is the current project, then we create a task and push that task into that project.
-  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false);
-  //project?.tasks.push(todo)
+  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false, false);
   currentProject?.tasks.push(todo)
   console.dir(currentProject)
   console.dir( howYouDoin)
@@ -152,15 +158,14 @@ const renderTasks = () => {
     let node = createToDoElm(task)
     todoContainer?.appendChild(node);
   })
+    console.log("render", currentProject)
 }
 
-
 const toggleView = (projectObj: any, projectNode: HTMLDivElement | undefined) => {
-
   currentProject = projectObj
   selectProject(projectNode)
   renderTasks();
-  console.log(currentProject)
+  console.log("toggle", currentProject)
 }
 
 
@@ -193,7 +198,6 @@ const createHomeProjectElm = (projectObj: any) => {
   project.classList.add("home-item");
   project.addEventListener("click",() => toggleView(projectObj, project))
 
-
   let projectIcon = document.createElement("span");
   projectIcon.classList.add("material-icons-round", projectObj.name);
   projectIcon.textContent = projectObj.name;
@@ -210,7 +214,6 @@ const createHomeProjectElm = (projectObj: any) => {
 
 const addProjectItem = () => {
   //TODO: here is where we need to add tasks with the projects
-  //localStorage.setItem("howYouDoin", JSON.stringify(howYouDoin)); 
   //TODO: a brand new howyoudoin instance is being created on every new user account and thier projects 
   // are being saved in localStorage or firestore.
   const project = new Project(inputProjectElm.value);
@@ -230,7 +233,6 @@ const loadProjects = () => {
   userProjects.forEach(project => {
     createProjectElm(project)
   })
-
 }
 
 const loadTasks = () => {
