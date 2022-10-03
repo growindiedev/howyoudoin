@@ -62,8 +62,10 @@ const closeProjectForm = () => {
   openProjectFormBtn && projectsContainer?.appendChild(openProjectFormBtn);
 }
 
-const removeTodoItem = (e: any) => {
-  e.target.parentNode.remove()
+const removeTodoItem = (taskObj: any) => {
+  currentProject.tasks = currentProject.tasks.filter(task => taskObj.id !== task.id)
+  renderTasks();
+  //e.target.parentNode.remove()
 }
 
 const removeProjectItem = (e: any) => {
@@ -122,7 +124,7 @@ const createToDoElm = (taskObj: any) => {
   let cancelIcon = document.createElement("span");
   cancelIcon.classList.add("material-icons-round", "cancel", "todo-btn");
   cancelIcon.textContent = "cancel";
-  cancelIcon.addEventListener("click", removeTodoItem)
+  cancelIcon.addEventListener("click",() => removeTodoItem(taskObj))
   task.appendChild(cancelIcon)
 
   if(taskObj.done){
