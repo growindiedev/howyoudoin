@@ -104,6 +104,7 @@ const completeTodoItem = (e: any, taskObj: any) => {
 const favoriteTodoItem = (e: any, taskObj: any) => {
   taskObj.important = !taskObj.important
   taskObj.important ? e.target.classList.add("starred") : e.target.classList.remove("starred")
+  renderTasks();
 }
 
 const createToDoElm = (taskObj: any) => {
@@ -198,7 +199,14 @@ const renderTasks = () => {
         break;
       }
       case 'star': {
-          
+        howYouDoin.projects.forEach(project => {
+          project.tasks.forEach(task => {
+            if(task.important) {
+              let node = createToDoElm(task)
+              todoContainer?.appendChild(node);
+            }
+          });
+        })
         break;
       }
       default:{
@@ -208,16 +216,7 @@ const renderTasks = () => {
         })  
         break;
       }
-
     }
-
-    //}
-    // currentProject.tasks.forEach( (task: any) => {
-    //   let node = createToDoElm(task)
-    //   todoContainer?.appendChild(node);
-    // })  
- 
- 
 }
 
 const toggleView = (projectObj: any, projectNode: Element | undefined | null) => {
