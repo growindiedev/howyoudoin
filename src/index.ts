@@ -2,6 +2,7 @@ import "./style.scss"
 import Task from "./Task"
 import Project from "./Project"
 import HowYouDoin from "./HowYouDoin"
+import { id } from "date-fns/locale"
 
 const mainView = document.querySelector(".main-view")
 
@@ -24,7 +25,7 @@ const inputDescriptionElm : any = document.querySelector(".add-desc-input")
 const inputDateElm : any = document.querySelector(".add-date-input")
 
 //TODO: state management should happen inside howYouDoin class!
-const howYouDoin = new HowYouDoin();
+let howYouDoin = new HowYouDoin();
 let currentProject: any = howYouDoin.projects[0]
 
 inputTaskForm?.remove();
@@ -59,10 +60,20 @@ const closeProjectForm = () => {
   openProjectFormBtn && projectsContainer?.appendChild(openProjectFormBtn);
 }
 
-const removeTodoItem = (taskObj: any) => {
-  currentProject.tasks = currentProject.tasks.filter((task: { id: any }) => taskObj.id !== task.id)
+const removeTodoItem = (e: any, taskObj: any) => {
+  let newTasks = currentProject.tasks.filter((task: { id: any }) => taskObj.id !== task.id)
+  currentProject.tasks = newTasks
+
+  let update = howYouDoin.projects.map( project => {
+    let newProject = {...project}
+    if(project.tasks.includes(taskObj)){
+      newProject.tasks = project.tasks.filter(task => task !== taskObj)
+    }
+    return newProject
+  })
+  howYouDoin.projects = update;
+  renderProjects();
   renderTasks();
-  //e.target.parentNode.remove()
 }
 
 const renderProjects = () => {
@@ -80,7 +91,7 @@ const removeProjectItem = (e: any, projectObj: any) => {
   renderProjects();
   const inbox = document.querySelector(".material-icons-round.inbox")
   projectObj.id === currentProject.id && toggleView(howYouDoin.projects[0], inbox)  
-  //loadProjects()
+  //loadAllProjects()
   //e.target.parentNode.remove()
 }
 
@@ -96,8 +107,6 @@ const favoriteTodoItem = (e: any, taskObj: any) => {
 }
 
 const createToDoElm = (taskObj: any) => {
-  //TODO: conditionally render the todos w.r.t current project
-  // TODO: need to take tasks from current projects
   let task = document.createElement("div");
   task.classList.add("todo-item");
 
@@ -136,7 +145,7 @@ const createToDoElm = (taskObj: any) => {
   let cancelIcon = document.createElement("span");
   cancelIcon.classList.add("material-icons-round", "cancel", "todo-btn");
   cancelIcon.textContent = "cancel";
-  cancelIcon.addEventListener("click",() => removeTodoItem(taskObj))
+  cancelIcon.addEventListener("click",(e) => removeTodoItem(e, taskObj))
   task.appendChild(cancelIcon)
 
   if(taskObj.done){
@@ -168,31 +177,61 @@ const selectProject = (node: any) => {
 }
 
 const renderTasks = () => {
+
   document.querySelector(".project-heading")!.textContent = currentProject.name;
   todoContainer!.innerHTML = "";
-  currentProject.tasks.forEach( (task: any) => {
-    let node = createToDoElm(task)
-    todoContainer?.appendChild(node);
-  })
-  console.log("renderTasks", howYouDoin)
+    switch (currentProject.name.toLowerCase()) {
+      case 'inbox': {
+        howYouDoin.projects.forEach(project => {
+          project.tasks.forEach(task => {
+              let node = createToDoElm(task)
+              todoContainer?.appendChild(node);
+          });
+        })
+        break;
+      }
+      case 'today': {
+        break;
+      }
+      case 'upcoming': {
+        
+        break;
+      }
+      case 'star': {
+          
+        break;
+      }
+      default:{
+        currentProject.tasks.forEach( (task: any) => {
+          let node = createToDoElm(task)
+          todoContainer?.appendChild(node);
+        })  
+        break;
+      }
+
+    }
+
+    //}
+    // currentProject.tasks.forEach( (task: any) => {
+    //   let node = createToDoElm(task)
+    //   todoContainer?.appendChild(node);
+    // })  
+ 
  
 }
 
-
-
 const toggleView = (projectObj: any, projectNode: Element | undefined | null) => {
+  //TODO: CAN GET OPTIONAL PARAMETER FROM createHomeProjectElm to know its a home project.
   currentProject = projectObj
+  //TODO: here we can apply the logic to render tasks with filters
   selectProject(projectNode)
   renderTasks();
-  console.log("toggle", currentProject)
 }
-
 
 const createProjectElm = (projectObj: any) => {
   let project = document.createElement("div");
   project.classList.add("projects-item");
   project.addEventListener("click",() => toggleView(projectObj, project))
-
   
   let projectIcon = document.createElement("span");
   projectIcon.classList.add("material-icons-round", "project-icon");
@@ -247,7 +286,7 @@ const addProjectItem = () => {
   closeProjectForm();
 }
 
-const loadProjects = () => {
+const loadAllProjects = () => {
   //TODO: abilty to differ Home projects from User projects.
   projectsContainer!.innerHTML = "";
   homeProjectsContainer!.innerHTML = "";
@@ -263,7 +302,7 @@ const loadProjects = () => {
   projectsContainer?.appendChild(openProjectFormBtn!)
 }
 
-loadProjects();
+loadAllProjects();
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)

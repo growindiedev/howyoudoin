@@ -1,7 +1,7 @@
 import Project from "./Project"
 
 export default class HowYouDoin {
-    projects: {name: string, tasks: any[], id: any}[]
+    projects: {name: string, tasks: any[], id: string}[]
     constructor() {
       this.projects = []
       this.projects.push(new Project('inbox'))
