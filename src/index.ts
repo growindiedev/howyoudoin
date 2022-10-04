@@ -2,7 +2,10 @@ import "./style.scss"
 import Task from "./Task"
 import Project from "./Project"
 import HowYouDoin from "./HowYouDoin"
-import { id } from "date-fns/locale"
+import { addDays, format, isEqual } from "date-fns";
+import isFuture from 'date-fns/isFuture'
+
+
 
 const mainView = document.querySelector(".main-view")
 
@@ -164,9 +167,8 @@ const addToDoItem = () => {
  //TODO: can grab values from localstorage or firebase here
  //TODO: first we check what is the current project, then we create a task and push that task into that project.
   const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false, false);
+  //currentProject?.tasks.push({...todo, dueDate: todo.getDateFormatted()})
   currentProject?.tasks.push(todo)
-  console.dir(currentProject)
-  console.dir( howYouDoin)
   renderTasks();
   closeTaskForm();
 }
@@ -191,10 +193,30 @@ const renderTasks = () => {
         })
         break;
       }
+
       case 'today': {
+        let today = Date.parse(format(new Date(), "yyyy-MM-dd"));           //parse for comparison and format so it has the same format before parsing it
+        howYouDoin.projects.forEach(project => {
+          project.tasks.forEach(task => {
+            let date = Date.parse(task.dueDate);
+            if(isEqual(date, today)){
+              let node = createToDoElm(task)
+              todoContainer?.appendChild(node);
+            } 
+          });
+        });
         break;
       }
       case 'upcoming': {
+        howYouDoin.projects.forEach(project => {
+          project.tasks.forEach(task => {
+            let date = Date.parse(task.dueDate);
+            if(isFuture(date)){
+              let node = createToDoElm(task)
+              todoContainer?.appendChild(node);
+            }
+          });
+        })
         
         break;
       }
