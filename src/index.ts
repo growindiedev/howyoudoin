@@ -256,7 +256,7 @@ const createProjectElm = (projectObj: any) => {
   
   let projectIcon = document.createElement("span");
   projectIcon.classList.add("material-icons-round", "project-icon");
-  projectIcon.textContent = "build_circle";
+  projectIcon.textContent = "checklist";
 
   project.appendChild(projectIcon)
 
