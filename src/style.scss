@@ -239,12 +239,12 @@ body {
     padding: 0.3rem;
   }
 
-  .push-task {
-    grid-column: 2/3;
+  .push-task, .edit-task {
+    grid-column: 3/4;
   }
 
   .close-form {
-    grid-column: 3/4;
+    grid-column: 2/3;
   }
 
   button {
