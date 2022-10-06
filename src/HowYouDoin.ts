@@ -10,6 +10,4 @@ export default class HowYouDoin {
       this.projects.push(new Project('star'))
       this.projects.push(new Project('Blockchain'))
     }
-
-    
 }
