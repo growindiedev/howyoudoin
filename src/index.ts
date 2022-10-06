@@ -2,10 +2,8 @@ import "./style.scss"
 import Task from "./Task"
 import Project from "./Project"
 import HowYouDoin from "./HowYouDoin"
-import { addDays, format, isEqual } from "date-fns";
+import { format, isEqual } from "date-fns";
 import isFuture from 'date-fns/isFuture'
-
-
 
 const mainView = document.querySelector(".main-view")
 
@@ -14,6 +12,7 @@ const inputTaskForm  = document.querySelector(".input-form")
 const openTaskFormBtn = document.querySelector(".open-form")
 const closeTaskFormBtn = document.querySelector(".close-form")
 const pushTaskBtn = document.querySelector(".push-task")
+const editTaskBtn = document.querySelector(".edit-task")
 
 const projectsContainer = document.querySelector(".projects-container")
 const homeProjectsContainer = document.querySelector(".home-container")
@@ -38,15 +37,31 @@ const createForm = () => {
   const input = document.createElement("input")
 }
 
-const openTaskForm  = (e: Event) => {
+const openTaskForm  = (e: any) => {
   openTaskFormBtn?.remove();
-  inputTaskForm && mainView?.appendChild(inputTaskForm);
+  editTaskBtn?.remove()
+  let checkBtn: any = document.querySelector(".push-task")
+  if(!checkBtn) {
+    inputTaskForm?.appendChild(pushTaskBtn!)
+  }
+  mainView?.appendChild(inputTaskForm!);
+}
+
+const openEditForm = (e: any) => {
+  openTaskFormBtn?.remove();
+  pushTaskBtn?.remove()
+  let checkBtn: any = document.querySelector(".edit-task")
+  if(!checkBtn) {
+    inputTaskForm?.appendChild(editTaskBtn!)
+  }
+  mainView?.appendChild(inputTaskForm!);
 }
   
 const openProjectForm  = (e: Event) => {
   openProjectFormBtn?.remove();
   inputProjectForm && projectsContainer?.appendChild(inputProjectForm);
 }
+
 
 const closeTaskForm = () => {
   inputTaskElm.value = "";
@@ -94,8 +109,6 @@ const removeProjectItem = (e: any, projectObj: any) => {
   renderProjects();
   const inbox = document.querySelector(".material-icons-round.inbox")
   projectObj.id === currentProject.id && toggleView(howYouDoin.projects[0], inbox)  
-  //loadAllProjects()
-  //e.target.parentNode.remove()
 }
 
 const completeTodoItem = (e: any, taskObj: any) => {
@@ -152,6 +165,13 @@ const createToDoElm = (taskObj: any) => {
   cancelIcon.addEventListener("click",(e) => removeTodoItem(e, taskObj))
   task.appendChild(cancelIcon)
 
+  let editIcon = document.createElement("span");
+  editIcon.classList.add("material-icons-round", "edit", "todo-btn");
+  editIcon.textContent = "edit";
+  editIcon.addEventListener("click", openEditForm )
+  editTaskBtn?.addEventListener("click", (e) => editToDoItem(e, taskObj))
+  task.appendChild(editIcon)
+
   if(taskObj.done){
     checkIcon.classList.add("checked") 
     textContainer.classList.add("todo-item-checked");
@@ -163,13 +183,18 @@ const createToDoElm = (taskObj: any) => {
   return task;
 }
 
-const addToDoItem = () => {
+const addToDoItem = (e: any) => {
  //TODO: can grab values from localstorage or firebase here
  //TODO: first we check what is the current project, then we create a task and push that task into that project.
+ //TODO: RISK OF INFINITE LOOP, HAVE TO MAKE CHANGES HERE TO EDIT THE TASK
   const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false, false);
-  //currentProject?.tasks.push({...todo, dueDate: todo.getDateFormatted()})
   currentProject?.tasks.push(todo)
   renderTasks();
+  closeTaskForm();
+}
+
+const editToDoItem = (e: any, taskObj: any) => {
+  alert("Im god")
   closeTaskForm();
 }
 
@@ -195,7 +220,8 @@ const renderTasks = () => {
       }
 
       case 'today': {
-        let today = Date.parse(format(new Date(), "yyyy-MM-dd"));           //parse for comparison and format so it has the same format before parsing it
+        let today = Date.parse(format(new Date(), "yyyy-MM-dd"));           
+        //parse for comparison and format so it has the same format before parsing it
         howYouDoin.projects.forEach(project => {
           project.tasks.forEach(task => {
             let date = Date.parse(task.dueDate);
