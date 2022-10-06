@@ -38,27 +38,34 @@ const createForm = () => {
 }
 
 const openTaskForm  = (e: any) => {
-  openTaskFormBtn?.remove();
-  editTaskBtn?.remove()
-  let checkBtn: any = document.querySelector(".push-task")
-  if(!checkBtn) {
-    inputTaskForm?.appendChild(pushTaskBtn!)
-  }
-  mainView?.appendChild(inputTaskForm!);
+
+    openTaskFormBtn?.remove();
+    editTaskBtn?.remove()
+    let checkBtn: any = document.querySelector(".push-task")
+    if(!checkBtn) {
+      inputTaskForm?.appendChild(pushTaskBtn!)
+    }
+    mainView?.appendChild(inputTaskForm!);
+
 }
 
 const openEditForm = (e: any, taskObj: any) => {
-  openTaskFormBtn?.remove();
-  pushTaskBtn?.remove()
-  let checkBtn: any = document.querySelector(".edit-task")
-  if(!checkBtn) {
-    inputTaskForm?.appendChild(editTaskBtn!)
-  }
 
-  inputTaskElm.value = taskObj.name;
-  inputDescriptionElm.value = taskObj.description;
-  inputDateElm.value = taskObj.dueDate;
-  mainView?.appendChild(inputTaskForm!);
+  if (mainView?.querySelector(".input-form")){
+    closeTaskForm()
+  } else {
+    openTaskFormBtn?.remove();
+    pushTaskBtn?.remove()
+    let checkBtn: any = document.querySelector(".edit-task")
+    if(!checkBtn) {
+      inputTaskForm?.appendChild(editTaskBtn!)
+    }
+  
+    inputTaskElm.value = taskObj.name;
+    inputDescriptionElm.value = taskObj.description;
+    inputDateElm.value = taskObj.dueDate;
+    mainView?.appendChild(inputTaskForm!);
+  }
 }
   
 const openProjectForm  = (e: Event) => {
