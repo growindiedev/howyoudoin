@@ -33,10 +33,6 @@ let currentProject: any = howYouDoin.projects[0]
 inputTaskForm?.remove();
 inputProjectForm?.remove();
 
-const createForm = () => {
-  const input = document.createElement("input")
-}
-
 const openTaskForm  = (e: any) => {
 
     openTaskFormBtn?.remove();
@@ -50,7 +46,7 @@ const openTaskForm  = (e: any) => {
 }
 
 const openEditForm = (e: any, taskObj: any) => {
-
+  e.stopPropagation()
   if (mainView?.querySelector(".input-form")){
     closeTaskForm()
   } else {
@@ -60,7 +56,6 @@ const openEditForm = (e: any, taskObj: any) => {
     if(!checkBtn) {
       inputTaskForm?.appendChild(editTaskBtn!)
     }
-  
     inputTaskElm.value = taskObj.name;
     inputDescriptionElm.value = taskObj.description;
     inputDateElm.value = taskObj.dueDate;
@@ -180,7 +175,7 @@ const createToDoElm = (taskObj: any) => {
   editIcon.classList.add("material-icons-round", "edit", "todo-btn");
   editIcon.textContent = "edit";
   editIcon.addEventListener("click", (e) => openEditForm(e, taskObj) )
-  editTaskBtn?.addEventListener("click", (e) => editToDoItem(e, taskObj))
+
   task.appendChild(editIcon)
 
   if(taskObj.done){
@@ -195,9 +190,6 @@ const createToDoElm = (taskObj: any) => {
 }
 
 const addToDoItem = (e: any) => {
- //TODO: can grab values from localstorage or firebase here
- //TODO: first we check what is the current project, then we create a task and push that task into that project.
- //TODO: RISK OF INFINITE LOOP, HAVE TO MAKE CHANGES HERE TO EDIT THE TASK
   const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false, false);
   currentProject?.tasks.push(todo)
   renderTasks();
@@ -205,9 +197,19 @@ const addToDoItem = (e: any) => {
 }
 
 const editToDoItem = (e: any, taskObj: any) => {
-  alert(taskObj.name)
-  
+  e.preventDefault();
+  console.log("old", taskObj)
+  taskObj.name = inputTaskElm.value;
+  taskObj.description = inputDescriptionElm.value;
+  taskObj.dueDate = inputDateElm.value;
+
+  console.log("new", taskObj);
+  console.log("oldP", currentProject);
+
   closeTaskForm();
+  renderTasks();
+
+  console.log("newP", currentProject);
 }
 
 const selectProject = (node: any) => {
@@ -280,9 +282,7 @@ const renderTasks = () => {
 }
 
 const toggleView = (projectObj: any, projectNode: Element | undefined | null) => {
-  //TODO: CAN GET OPTIONAL PARAMETER FROM createHomeProjectElm to know its a home project.
   currentProject = projectObj
-  //TODO: here we can apply the logic to render tasks with filters
   selectProject(projectNode)
   renderTasks();
 }
@@ -336,9 +336,6 @@ const createHomeProjectElm = (projectObj: any) => {
 
 
 const addProjectItem = () => {
-  //TODO: here is where we need to add tasks with the projects
-  //TODO: a brand new howyoudoin instance is being created on every new user account and thier projects 
-  // are being saved in localStorage or firestore.
   const project = new Project(inputProjectElm.value);
   howYouDoin.projects.push(project);
   createProjectElm(project);
@@ -365,6 +362,9 @@ loadAllProjects();
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)
+
+//TODO: Need to figure out how to pass current task Object as parameter to editToDoItem to make it functional
+//editTaskBtn?.addEventListener("click", (e) => editToDoItem(e, currentProject.tasks[0]))
 
 openProjectFormBtn?.addEventListener("click", openProjectForm);
 pushProjectBtn?.addEventListener("click", addProjectItem)               
