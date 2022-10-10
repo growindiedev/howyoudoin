@@ -1,0 +1,56 @@
+[debug] [2022-10-09T15:49:48.718Z] ----------------------------------------------------------------------
+[debug] [2022-10-09T15:49:48.719Z] Command:       /Users/jarryingnut/.nvm/versions/node/v18.9.0/bin/node /Users/jarryingnut/.nvm/versions/node/v18.9.0/bin/firebase serve --only hosting
+[debug] [2022-10-09T15:49:48.719Z] CLI Version:   11.14.1
+[debug] [2022-10-09T15:49:48.719Z] Platform:      darwin
+[debug] [2022-10-09T15:49:48.720Z] Node Version:  v18.9.0
+[debug] [2022-10-09T15:49:48.720Z] Time:          Sun Oct 09 2022 21:19:48 GMT+0530 (India Standard Time)
+[debug] [2022-10-09T15:49:48.720Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-10-09T15:49:48.772Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-10-09T15:49:48.772Z] > authorizing via signed-in user (rabhishekranjan@gmail.com)
+[debug] [2022-10-09T15:49:48.772Z] [iam] checking project howyoudoin99 for permissions ["firebase.projects.get"]
+[debug] [2022-10-09T15:49:48.773Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions [none]
+[debug] [2022-10-09T15:49:48.773Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions x-goog-quota-user=projects/howyoudoin99
+[debug] [2022-10-09T15:49:48.773Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-10-09T15:49:50.426Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions 200
+[debug] [2022-10-09T15:49:50.426Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-10-09T15:49:50.428Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/howyoudoin99 [none]
+[debug] [2022-10-09T15:49:51.116Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/howyoudoin99 200
+[debug] [2022-10-09T15:49:51.116Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/howyoudoin99 {"projectId":"howyoudoin99","projectNumber":"552106187581","displayName":"HowYouDoin","name":"projects/howyoudoin99","resources":{"hostingSite":"howyoudoin99","storageBucket":"howyoudoin99.appspot.com","locationId":"asia-southeast1"},"state":"ACTIVE","etag":"1_85100816-823b-48ee-ba8b-f693e76c0055"}
+[debug] [2022-10-09T15:49:51.298Z] TypeError: Cannot read properties of undefined (reading 'source')
+    at /Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/serve/index.js:19:66
+    at Array.some (<anonymous>)
+    at serve (/Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/serve/index.js:19:50)
+    at Command.actionFn (/Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/commands/serve.js:47:34)
+    at /Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/command.js:216:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2022-10-09T15:50:36.481Z] ----------------------------------------------------------------------
+[debug] [2022-10-09T15:50:36.482Z] Command:       /Users/jarryingnut/.nvm/versions/node/v18.9.0/bin/node /Users/jarryingnut/.nvm/versions/node/v18.9.0/bin/firebase serve --only hosting
+[debug] [2022-10-09T15:50:36.482Z] CLI Version:   11.14.1
+[debug] [2022-10-09T15:50:36.482Z] Platform:      darwin
+[debug] [2022-10-09T15:50:36.482Z] Node Version:  v18.9.0
+[debug] [2022-10-09T15:50:36.483Z] Time:          Sun Oct 09 2022 21:20:36 GMT+0530 (India Standard Time)
+[debug] [2022-10-09T15:50:36.483Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-10-09T15:50:36.534Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-10-09T15:50:36.534Z] > authorizing via signed-in user (rabhishekranjan@gmail.com)
+[debug] [2022-10-09T15:50:36.534Z] [iam] checking project howyoudoin99 for permissions ["firebase.projects.get"]
+[debug] [2022-10-09T15:50:36.535Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions [none]
+[debug] [2022-10-09T15:50:36.535Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions x-goog-quota-user=projects/howyoudoin99
+[debug] [2022-10-09T15:50:36.535Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-10-09T15:50:38.084Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions 200
+[debug] [2022-10-09T15:50:38.085Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/howyoudoin99:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2022-10-09T15:50:38.086Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/howyoudoin99 [none]
+[debug] [2022-10-09T15:50:38.529Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/howyoudoin99 200
+[debug] [2022-10-09T15:50:38.530Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/howyoudoin99 {"projectId":"howyoudoin99","projectNumber":"552106187581","displayName":"HowYouDoin","name":"projects/howyoudoin99","resources":{"hostingSite":"howyoudoin99","storageBucket":"howyoudoin99.appspot.com","locationId":"asia-southeast1"},"state":"ACTIVE","etag":"1_85100816-823b-48ee-ba8b-f693e76c0055"}
+[debug] [2022-10-09T15:50:38.708Z] TypeError: Cannot read properties of undefined (reading 'source')
+    at /Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/serve/index.js:19:66
+    at Array.some (<anonymous>)
+    at serve (/Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/serve/index.js:19:50)
+    at Command.actionFn (/Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/commands/serve.js:47:34)
+    at /Users/jarryingnut/.nvm/versions/node/v18.9.0/lib/node_modules/firebase-tools/lib/command.js:216:25
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: An unexpected error has occurred.

@@ -4,7 +4,13 @@ import Project from "./Project"
 import HowYouDoin from "./HowYouDoin"
 import { format, isEqual } from "date-fns";
 import isFuture from 'date-fns/isFuture'
+import { signIn, signOutUser, monitorAuthState } from "./Storage";
+import { getAuth } from "firebase/auth";
 
+
+const signInBtn = document.querySelector(".sign-in")
+const signOutBtn = document.querySelector(".sign-out")
+const authStatus = document.querySelector(".auth-status")
 const mainView = document.querySelector(".main-view")
 
 const todoContainer = document.querySelector(".todo-container")
@@ -27,8 +33,11 @@ const inputDescriptionElm : any = document.querySelector(".add-desc-input")
 const inputDateElm : any = document.querySelector(".add-date-input")
 
 //TODO: state management should happen inside howYouDoin class!
+//const auth = getAuth()
+//let user  = auth.currentUser;
 let howYouDoin = new HowYouDoin();
 let currentProject: any = howYouDoin.projects[0]
+
 
 inputTaskForm?.remove();
 inputProjectForm?.remove();
@@ -84,6 +93,9 @@ const closeProjectForm = () => {
   openProjectFormBtn && projectsContainer?.appendChild(openProjectFormBtn);
 }
 
+
+//==============
+
 const removeTodoItem = (e: any, taskObj: any) => {
   let newTasks = currentProject.tasks.filter((task: { id: any }) => taskObj.id !== task.id)
   currentProject.tasks = newTasks
@@ -112,6 +124,7 @@ const renderProjects = () => {
 
 const removeProjectItem = (e: any, projectObj: any) => {
   howYouDoin.projects = howYouDoin.projects.filter(project => projectObj.id !== project.id)
+
   renderProjects();
   const inbox = document.querySelector(".material-icons-round.inbox")
   projectObj.id === currentProject.id && toggleView(howYouDoin.projects[0], inbox)  
@@ -358,7 +371,13 @@ const loadAllProjects = () => {
   projectsContainer?.appendChild(openProjectFormBtn!)
 }
 
+
 loadAllProjects();
+
+signInBtn?.addEventListener("click", signIn)
+signOutBtn?.addEventListener("click", signOutUser)
+monitorAuthState(authStatus);
+
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)
 pushTaskBtn?.addEventListener("click", addToDoItem)
