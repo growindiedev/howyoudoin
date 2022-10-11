@@ -376,7 +376,6 @@ loadAllProjects();
 
 signInBtn?.addEventListener("click", signIn)
 signOutBtn?.addEventListener("click", signOutUser)
-monitorAuthState(authStatus);
 
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)

@@ -73,7 +73,7 @@ export function monitorAuthState(node: any) {
     } else {
       // User is signed out
       //alert(`you are signed out ${user}`)
-      node.textContent = "signed-out"
+      //node.textContent = "signed-out"
     }
   })
 }
