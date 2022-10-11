@@ -38,6 +38,7 @@ const inputDateElm : any = document.querySelector(".add-date-input")
 let howYouDoin = new HowYouDoin();
 let currentProject: any = howYouDoin.projects[0]
 
+monitorAuthState(document);
 
 inputTaskForm?.remove();
 inputProjectForm?.remove();
@@ -376,7 +377,6 @@ loadAllProjects();
 
 signInBtn?.addEventListener("click", signIn)
 signOutBtn?.addEventListener("click", signOutUser)
-monitorAuthState(authStatus);
 
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)

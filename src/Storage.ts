@@ -61,20 +61,28 @@ export function isUserSignedIn() {
   return !!getAuth().currentUser;
 }
 
-export function monitorAuthState(node: any) {
+export function monitorAuthState(document: any) {
+  let sidebar = document.querySelector(".sidebar")
+  let mainView = document.querySelector(".main-view")
+  let container = document.querySelector(".conatiner")
   let auth = getAuth()
+
+
   onAuthStateChanged(auth, (user) => {
+   // location.reload()
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      // ...
-      node.textContent = user.displayName
-      //alert(`you are signed in ${user}`)
+      // container.appendChild(sidebar);
+      // container.appendChild(mainView);
+      //container.textContent = "poop fracis"      
+      //node.textContent = user.displayName
     } else {
-      // User is signed out
-      //alert(`you are signed out ${user}`)
-      node.textContent = "signed-out"
+      // sidebar.remove()
+      // mainView.remove()
+      // sidebar.textContent = ""
+      // mainView.textContent = ""
     }
   })
 }
+
+
 
