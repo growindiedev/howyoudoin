@@ -4,8 +4,7 @@ import Project from "./Project"
 import HowYouDoin from "./HowYouDoin"
 import { format, isEqual } from "date-fns";
 import isFuture from 'date-fns/isFuture'
-import { signIn, signOutUser, monitorAuthState } from "./Storage";
-import { getAuth } from "firebase/auth";
+import { signIn, signOutUser } from "./Storage";
 
 
 const signInBtn = document.querySelector(".sign-in")
@@ -93,25 +92,6 @@ const closeProjectForm = () => {
   openProjectFormBtn && projectsContainer?.appendChild(openProjectFormBtn);
 }
 
-
-//==============
-
-const removeTodoItem = (e: any, taskObj: any) => {
-  let newTasks = currentProject.tasks.filter((task: { id: any }) => taskObj.id !== task.id)
-  currentProject.tasks = newTasks
-
-  let update = howYouDoin.projects.map( project => {
-    let newProject = {...project}
-    if(project.tasks.includes(taskObj)){
-      newProject.tasks = project.tasks.filter(task => task !== taskObj)
-    }
-    return newProject
-  })
-  howYouDoin.projects = update;
-  renderProjects();
-  renderTasks();
-}
-
 const renderProjects = () => {
   projectsContainer!.innerHTML = "";
   const userProjects = howYouDoin.projects.slice(4);
@@ -122,25 +102,7 @@ const renderProjects = () => {
   projectsContainer?.appendChild(openProjectFormBtn!)
 }
 
-const removeProjectItem = (e: any, projectObj: any) => {
-  howYouDoin.projects = howYouDoin.projects.filter(project => projectObj.id !== project.id)
 
-  renderProjects();
-  const inbox = document.querySelector(".material-icons-round.inbox")
-  projectObj.id === currentProject.id && toggleView(howYouDoin.projects[0], inbox)  
-}
-
-const completeTodoItem = (e: any, taskObj: any) => {
-  taskObj.done = !taskObj.done
-  taskObj.done ? e.target.classList.add("checked") : e.target.classList.remove("checked")
-  e.target.nextSibling.classList.toggle("todo-item-checked");
-}
-
-const favoriteTodoItem = (e: any, taskObj: any) => {
-  taskObj.important = !taskObj.important
-  taskObj.important ? e.target.classList.add("starred") : e.target.classList.remove("starred")
-  renderTasks();
-}
 
 const createToDoElm = (taskObj: any) => {
   let task = document.createElement("div");
@@ -200,29 +162,6 @@ const createToDoElm = (taskObj: any) => {
     starIcon.classList.add("starred")
   }
   return task;
-}
-
-const addToDoItem = (e: any) => {
-  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false, false);
-  currentProject?.tasks.push(todo)
-  renderTasks();
-  closeTaskForm();
-}
-
-const editToDoItem = (e: any, taskObj: any) => {
-  e.preventDefault();
-  console.log("old", taskObj)
-  taskObj.name = inputTaskElm.value;
-  taskObj.description = inputDescriptionElm.value;
-  taskObj.dueDate = inputDateElm.value;
-
-  console.log("new", taskObj);
-  console.log("oldP", currentProject);
-
-  closeTaskForm();
-  renderTasks();
-
-  console.log("newP", currentProject);
 }
 
 const selectProject = (node: any) => {
@@ -347,14 +286,6 @@ const createHomeProjectElm = (projectObj: any) => {
   homeProjectsContainer?.appendChild(project)
 }
 
-
-const addProjectItem = () => {
-  const project = new Project(inputProjectElm.value);
-  howYouDoin.projects.push(project);
-  createProjectElm(project);
-  closeProjectForm();
-}
-
 const loadAllProjects = () => {
   //TODO: abilty to differ Home projects from User projects.
   projectsContainer!.innerHTML = "";
@@ -371,11 +302,78 @@ const loadAllProjects = () => {
   projectsContainer?.appendChild(openProjectFormBtn!)
 }
 
+//==============
+
+const addToDoItem = (e: any) => {
+  const todo = new Task(inputTaskElm.value, inputDescriptionElm.value, inputDateElm.value, false, false);
+  currentProject?.tasks.push(todo)
+  renderTasks();
+  closeTaskForm();
+}
+const completeTodoItem = (e: any, taskObj: any) => {
+  taskObj.done = !taskObj.done
+  taskObj.done ? e.target.classList.add("checked") : e.target.classList.remove("checked")
+  e.target.nextSibling.classList.toggle("todo-item-checked");
+}
+
+const favoriteTodoItem = (e: any, taskObj: any) => {
+  taskObj.important = !taskObj.important
+  taskObj.important ? e.target.classList.add("starred") : e.target.classList.remove("starred")
+  renderTasks();
+}
+
+const editToDoItem = (e: any, taskObj: any) => {
+  e.preventDefault();
+  console.log("old", taskObj)
+  taskObj.name = inputTaskElm.value;
+  taskObj.description = inputDescriptionElm.value;
+  taskObj.dueDate = inputDateElm.value;
+
+  console.log("new", taskObj);
+  console.log("oldP", currentProject);
+
+  closeTaskForm();
+  renderTasks();
+
+  console.log("newP", currentProject);
+}
+
+const removeTodoItem = (e: any, taskObj: any) => {
+  let newTasks = currentProject.tasks.filter((task: { id: any }) => taskObj.id !== task.id)
+  currentProject.tasks = newTasks
+
+  let update = howYouDoin.projects.map( project => {
+    let newProject = {...project}
+    if(project.tasks.includes(taskObj)){
+      newProject.tasks = project.tasks.filter(task => task !== taskObj)
+    }
+    return newProject
+  })
+  howYouDoin.projects = update;
+  renderProjects();
+  renderTasks();
+}
+
+const addProjectItem = () => {
+  const project = new Project(inputProjectElm.value);
+  howYouDoin.projects.push(project);
+  createProjectElm(project);
+  closeProjectForm();
+}
+
+const removeProjectItem = (e: any, projectObj: any) => {
+  howYouDoin.projects = howYouDoin.projects.filter(project => projectObj.id !== project.id)
+
+  renderProjects();
+  const inbox = document.querySelector(".material-icons-round.inbox")
+  projectObj.id === currentProject.id && toggleView(howYouDoin.projects[0], inbox)  
+}
+
 
 loadAllProjects();
 
-signInBtn?.addEventListener("click", signIn)
-signOutBtn?.addEventListener("click", signOutUser)
+// signInBtn?.addEventListener("click", signIn)
+// signOutBtn?.addEventListener("click", signOutUser)
 
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)
