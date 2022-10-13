@@ -7,33 +7,49 @@
 
 body {
   display: grid;
-  grid-template-columns: 2.5fr 6fr;
+  //grid-template-columns: 2.5fr 6fr;
   grid-template-rows: 1.5fr 10fr 1fr;
   height: 100vh;
   font-family: 'Alata', sans-serif;
-
-
   * {
     display: block;
    }
+}
+
+body.main {
+  grid-template-columns: 2.5fr 6fr;
 }
 
 .header {
   font-size: 2.5rem;
   font-weight: 900;
   grid-column: 1 / -1;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   background-color: #2dd4bf;
   color: white;
   border-bottom: 2px solid #000;
-  gap: 1rem;
+  padding: 0 2rem;
 
-  .material-icons-round.check {
-    font-size: 2.5rem;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .material-icons-round.check {
+      font-size: 2.5rem;
+    }
+
   }
-  
+
+}
+
+.login-component {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar {

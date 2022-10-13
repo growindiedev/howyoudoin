@@ -4,9 +4,9 @@ import Project from "./Project"
 import HowYouDoin from "./HowYouDoin"
 import { format, isEqual } from "date-fns";
 import isFuture from 'date-fns/isFuture'
-import { signIn, signOutUser } from "./Storage";
+import { signIn, signOutUser, monitorAuthState } from "./Storage";
 
-
+monitorAuthState();
 const signInBtn = document.querySelector(".sign-in")
 const signOutBtn = document.querySelector(".sign-out")
 const authStatus = document.querySelector(".auth-status")
@@ -310,6 +310,7 @@ const addToDoItem = (e: any) => {
   renderTasks();
   closeTaskForm();
 }
+
 const completeTodoItem = (e: any, taskObj: any) => {
   taskObj.done = !taskObj.done
   taskObj.done ? e.target.classList.add("checked") : e.target.classList.remove("checked")
@@ -373,7 +374,7 @@ const removeProjectItem = (e: any, projectObj: any) => {
 loadAllProjects();
 
 // signInBtn?.addEventListener("click", signIn)
-// signOutBtn?.addEventListener("click", signOutUser)
+signOutBtn?.addEventListener("click", signOutUser)
 
 openTaskFormBtn?.addEventListener("click", openTaskForm)
 closeTaskFormBtn?.addEventListener("click", closeTaskForm)
